@@ -6,14 +6,15 @@ class Animals:
         self.name = name
         self.weight = weight
 
-    def feed(self):
-        return "Fed..."
-
+    def collect_stuff(self):
+        pass
 
 class Birds(Animals):
 
-    def collect(self):
-        return "Collected..."
+    def collect_stuff(self):
+        print("collected eggs")
+        super().collect_stuff()
+
 
 class Ungulates(Animals):
     pass
@@ -42,8 +43,10 @@ class Cow(Ungulates):
     def voice(self):
         return "muuuu..."
 
-    def milk(self):
-        return "Good..."
+    def collect_stuff(self):
+        print("received milk")
+        super().collect_stuff()
+
 
 
 class Sheep(Ungulates):
@@ -51,8 +54,9 @@ class Sheep(Ungulates):
     def voice(self):
         return "beeee..."
 
-    def shear(self):
-        return "Trimmed..."
+    def collect_stuff(self):
+        print("trimmed")
+        super().collect_stuff()
 
 
 class Goat(Ungulates):
@@ -60,53 +64,68 @@ class Goat(Ungulates):
     def voice(self):
         return "meeee..."
 
-    def milk(self):
-        return "Good..."
+    def collect_stuff(self):
+        print("received milk")
+        super().collect_stuff()
 
 
 total_weight = 0
-ferma = dict()
+ferma_dict = dict()
+ferma_list = []
 
-def add_ferma(animal):
-    if animal["weight"] not in ferma.keys():
-        ferma[animal["weight"]] = list()
-    ferma[animal["weight"]].append(animal["name"])
-    return ferma
-    # return ferma.append(animal)
 
-goose_0 = Goose("Gray",3)
-add_ferma(goose_0.__dict__)
+def add_to_ferma(animal):
+    if animal["weight"] not in ferma_dict.keys():
+        ferma_dict[animal["weight"]] = list()
+        ferma_dict[animal["weight"]].append(animal["name"])
+    return ferma_dict
 
-goose_1 = Goose("White",2)
-add_ferma(goose_1.__dict__)
 
-cow_0 = Cow("Man'ka",400)
-add_ferma(cow_0.__dict__)
+goose_0 = Goose("Gray", 3)
+ferma_list.append(goose_0)
+add_to_ferma(goose_0.__dict__)
 
-sheep_0 = Sheep("Barashek",50)
-add_ferma(sheep_0.__dict__)
+goose_1 = Goose("White", 2)
+ferma_list.append(goose_1)
+add_to_ferma(goose_1.__dict__)
 
-sheep_1 = Sheep("Barashek",60)
-add_ferma(sheep_1.__dict__)
+cow_0 = Cow("Man'ka", 400)
+ferma_list.append(cow_0)
+add_to_ferma(cow_0.__dict__)
 
-chicken_0 = Chicken("Ko-ko",1)
-add_ferma(chicken_0.__dict__)
+sheep_0 = Sheep("Barashek", 50)
+ferma_list.append(sheep_0)
+add_to_ferma(sheep_0.__dict__)
 
-chicken_1 = Chicken("Kukareku",2)
-add_ferma(chicken_1.__dict__)
+sheep_1 = Sheep("Barashek", 60)
+ferma_list.append(sheep_1)
+add_to_ferma(sheep_1.__dict__)
 
-goat_0 = Goat("Roga",100)
-add_ferma(goat_0.__dict__)
+chicken_0 = Chicken("Ko-ko", 1)
+ferma_list.append(chicken_0)
+add_to_ferma(chicken_0.__dict__)
 
-goat_1 = Goat("Kopita",120)
-add_ferma(goat_1.__dict__)
+chicken_1 = Chicken("Kukareku", 2)
+ferma_list.append(chicken_1)
+add_to_ferma(chicken_1.__dict__)
 
-duck_0 = Duck("Kryakva",2)
-add_ferma(duck_0.__dict__)
+goat_0 = Goat("Roga", 100)
+ferma_list.append(goat_0)
+add_to_ferma(goat_0.__dict__)
 
-print(ferma)
-ferma_sort = sorted(ferma.keys(),reverse = True)
-for x in ferma.keys():
+goat_1 = Goat("Kopita", 120)
+ferma_list.append(goat_1)
+add_to_ferma(goat_1.__dict__)
+
+duck_0 = Duck("Kryakva", 2)
+ferma_list.append(duck_0)
+add_to_ferma(duck_0.__dict__)
+
+for x in ferma_list:
+    x.collect_stuff()
+
+ferma_sort = sorted(ferma_dict.keys(), reverse = True)
+for x in ferma_dict.keys():
     total_weight += x
 
-print("общий вес животных: {},{} самое тяжелое животное".format(total_weight, ferma[ferma_sort[0]]))
+print("общий вес животных: {},{} самое тяжелое животное".format(total_weight, ferma_dict[ferma_sort[0]]))
