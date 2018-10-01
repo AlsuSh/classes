@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Animal(ABC):
     name = None
     weight = 0
@@ -12,6 +13,7 @@ class Animal(ABC):
     def collect_stuff(self):
         pass
 
+
 class Bird(Animal):
 
     def collect_stuff(self):
@@ -20,7 +22,9 @@ class Bird(Animal):
 
 
 class Ungulate(Animal):
-    pass
+
+    def collect_stuff(self):
+        super().collect_stuff()
 
 
 class Goose(Bird):
@@ -72,9 +76,7 @@ class Goat(Ungulate):
 
 
 total_weight = 0
-ferma_dict = dict()
 ferma_list = []
-
 
 goose_0 = Goose("Gray", 3)
 ferma_list.append(goose_0)
@@ -106,13 +108,10 @@ ferma_list.append(goat_1)
 duck_0 = Duck("Kryakva", 2)
 ferma_list.append(duck_0)
 
+for animal_ferma in ferma_list:
+    animal_ferma.collect_stuff()
+    total_weight += animal_ferma.weight
 
-for x in ferma_list:
-    x.collect_stuff()
-    total_weight += x.__dict__["weight"]
-    if x.__dict__["weight"] not in ferma_dict.keys():
-        ferma_dict[x.__dict__["weight"]] = list()
-        ferma_dict[x.__dict__["weight"]].append(x.__dict__["name"])
+ferma_list.sort(key=lambda x: x.weight)
 
-ferma_sort = sorted(ferma_dict.keys(), reverse = True)
-print("общий вес животных: {},{} самое тяжелое животное".format(total_weight, ferma_dict[ferma_sort[0]]))
+print("общий вес животных: {}, {} самое тяжелое животное".format(total_weight, ferma_list[-1].name))
